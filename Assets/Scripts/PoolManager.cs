@@ -4,29 +4,50 @@ using UnityEngine;
 
 public class PoolManager : MonoBehaviour
 {
-    //turn this class into a singleto for easy accessibility
+  
     private static PoolManager _instance;
+    [SerializeField]
+    private GameObject _bulletContainer;
+    [SerializeField]
+    private GameObject _bullterPrefab;
+    [SerializeField]
+    private List<GameObject> _bulletPoolList;
+
+    //turn this class into a singleto for easy accessibility
     public static PoolManager Instance
     {
         get
         {
             if (_instance == null) ;
-            Debug.LogError("The Pool Manager is NULL");
+            Debug.LogError("The PoolManager is NULL");
 
             return _instance;
         }
     }
 
-
     private void Awake()
     {
-        
+        _instance = this;
+    }
+
+    private void Start()
+    {
+        _bulletPoolList = GenerateBullets(10);
     }
 
     // pregenerate a list of bullets using the bullet prefab
 
-    List<GameObject> GenerateBullets()
+    List<GameObject> GenerateBullets(int amountOfBullets)
     {
-        return null;
+        for(int i = 0; i< amountOfBullets; i++)
+        {
+            GameObject bullet = Instantiate(_bullterPrefab);
+            bullet.transform.parent = _bulletContainer.transform;
+            bullet.SetActive(false);
+            _bulletPoolList.Add(bullet);
+        }
+       
+
+        return _bulletPoolList;
     }
 }
