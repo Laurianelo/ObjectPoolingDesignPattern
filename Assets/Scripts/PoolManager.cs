@@ -9,17 +9,20 @@ public class PoolManager : MonoBehaviour
     [SerializeField]
     private GameObject _bulletContainer;
     [SerializeField]
-    private GameObject _bullterPrefab;
+    private GameObject _bulltetPrefab;
     [SerializeField]
     private List<GameObject> _bulletPoolList;
 
-    //turn this class into a singleto for easy accessibility
+    //turn this class into a singleton for easy accessbility
     public static PoolManager Instance
     {
         get
         {
-            if (_instance == null) ;
-            Debug.LogError("The PoolManager is NULL");
+            if (_instance == null)
+            {
+                Debug.LogError("The PoolManager is NULL");
+            }
+         
 
             return _instance;
         }
@@ -41,7 +44,7 @@ public class PoolManager : MonoBehaviour
     {
         for(int i = 0; i< amountOfBullets; i++)
         {
-            GameObject bullet = Instantiate(_bullterPrefab);
+            GameObject bullet = Instantiate(_bulltetPrefab);
             bullet.transform.parent = _bulletContainer.transform;
             bullet.SetActive(false);
             _bulletPoolList.Add(bullet);
@@ -50,4 +53,32 @@ public class PoolManager : MonoBehaviour
 
         return _bulletPoolList;
     }
+
+
+    public GameObject RequestBullet()
+    {
+        //loop throught the bullet list
+        foreach(var bullet in _bulletPoolList)
+        {
+            if(bullet.activeInHierarchy == false)
+            {
+                //bullet is available
+                bullet.SetActive(true);
+                return bullet;
+            }
+        }
+
+        //need to create a new bullet
+        GameObject newBullet = Instantiate(_bulltetPrefab);
+        newBullet.transform.parent = _bulletContainer.transform;
+        // newBullet.SetActive(true);
+        _bulletPoolList.Add(newBullet);
+        
+        //cheking for in-active bullet
+        //found one? Set it active and return it to player
+        //if no bullet avaible ( all turned on)
+        //generate x amount of bukkets and run the request bullet method
+        return newBullet;
+    }
+
 }

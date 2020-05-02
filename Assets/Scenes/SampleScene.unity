@@ -399,7 +399,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _bulletContainer: {fileID: 1596332866}
-  _bullterPrefab: {fileID: 626050876749788684, guid: b726dd107737b4e4c82b37b95f492ceb,
+  _bulltetPrefab: {fileID: 626050876749788684, guid: b726dd107737b4e4c82b37b95f492ceb,
     type: 3}
   _bulletPoolList: []
 --- !u!4 &1952531697

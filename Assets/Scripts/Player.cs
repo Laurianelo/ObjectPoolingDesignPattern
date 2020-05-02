@@ -10,7 +10,12 @@ public class Player : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            Instantiate(_bulletPrefab);//re-use
+            //Instantiate(_bulletPrefab); //wrong way//re-use
+
+            //communicate with the object pool
+            //request bullet
+            GameObject bullet =  PoolManager.Instance.RequestBullet();
+            bullet.transform.position = Vector3.zero;
         }
 
     }
